@@ -5,3 +5,5 @@ google-generativeai
 langchain-google-genai
 duckduckgo-search
 langchain-community
+chromadb
+pysqlite3-binary
