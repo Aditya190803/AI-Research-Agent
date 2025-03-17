@@ -1,0 +1,7 @@
+streamlit
+crewai
+langchain
+google-generativeai
+langchain-google-genai
+duckduckgo-search
+langchain-community
