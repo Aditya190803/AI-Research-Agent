@@ -1,16 +1,16 @@
-# Deep Research Agent
+# AI Research Agent
 
 A professional-grade AI research platform that delivers comprehensive, multi-source synthesized reports with real-time financial data integration.
 
 ## 🚀 Overview
 
-Deep Research is designed for high-stakes information gathering. Unlike standard chat AI, it follows a rigorous research methodology: analyzing the knowledge space, clarifying intent, planning the investigation, and synthesizing findings from across the web and financial markets.
+AI Research Agent is designed for high-stakes information gathering. Unlike standard chat AI, it follows a rigorous research methodology: analyzing the knowledge space, clarifying intent, planning the investigation, and synthesizing findings from across the web and financial markets.
 
 ## 🛠️ Tech Stack
 
 - **Framework**: [Next.js 15+](https://nextjs.org/) (App Router, Turbopack)
 - **LLM Orchestration**: [OpenRouter](https://openrouter.ai/) (utilizing `xiaomi/mimo-v2-flash:free` for high-speed synthesis).
-- **Web Search**: [LangSearch](https://langsearch.com/) for deep web crawling and information retrieval.
+- **Web Search**: [LangSearch](https://langsearch.com/) for comprehensive web crawling and information retrieval.
 - **Financial Data**: [Alpha Vantage](https://www.alphavantage.co/) for real-time stock quotes and company overviews.
 - **Runtime**: [Bun](https://bun.sh/) for ultra-fast development and build cycles.
 
@@ -23,9 +23,9 @@ The application features a dynamic, state-aware interface that guides users thro
 - **History Management**: Automatically saves research sessions to local storage for quick reference.
 - **Source Transparency**: Every report includes direct links to the original sources, ensuring all findings are verifiable.
 
-## �🔄 Detailed Research Workflow
+## 🔄 Detailed Research Workflow
 
-Deep Research follows a sophisticated multi-stage process to ensure accuracy and depth.
+AI Research Agent follows a sophisticated multi-stage process to ensure accuracy and depth.
 
 ### 1. Exploration & Initial Analysis
 - **Knowledge Mapping**: The agent performs an initial exploratory search to map the knowledge space and identify key themes.
@@ -40,11 +40,11 @@ Deep Research follows a sophisticated multi-stage process to ensure accuracy and
 ### 3. Strategy & Scope Confirmation
 After clarification, the agent presents a **Research Strategy** which includes:
 - **Confirmed Scope**: A concise summary of what will be investigated.
-- **Optimized Query**: The refined search string that will be used for deep retrieval.
+- **Optimized Query**: The refined search string that will be used for retrieval.
 - **Investigation Path**: A step-by-step plan showing the specific topics to be covered.
 
 #### 🖱️ User Actions at this Stage:
-- **Execute Deep Research ("Go")**: 
+- **Execute Research ("Go")**: 
     - Confirms the current strategy.
     - Triggers the full multi-source investigation.
     - Moves directly to the final synthesis phase.
@@ -53,7 +53,7 @@ After clarification, the agent presents a **Research Strategy** which includes:
     - **Logic**: The system combines the previous refined query with the new user input (e.g., *"Previous Query + Additional context: [User Input]"*).
     - **Restart**: The workflow loops back to Phase 1 with the newly enriched query to re-evaluate the strategy.
 
-### 4. Deep Investigation & Synthesis
+### 4. Comprehensive Investigation & Synthesis
 - **Query Decomposition**: The main query is broken down into 5-7 specialized sub-queries for maximum coverage.
 - **Parallel Retrieval**: Executes simultaneous searches across the web using LangSearch.
 - **Data Augmentation**: Merges real-time financial metrics (if applicable) with web findings.
