@@ -15,12 +15,12 @@ import {
 import { cn } from "@/lib/utils";
 
 export function ConfirmingPhase() {
-  const { query, strategy, executeDeepResearch, cancelResearch } = useResearch();
+  const { query, strategy, executeResearch, cancelResearch } = useResearch();
   const [isExecuting, setIsExecuting] = useState(false);
 
   const handleExecute = async () => {
     setIsExecuting(true);
-    await executeDeepResearch();
+    await executeResearch();
   };
 
   if (!strategy) {
@@ -191,7 +191,7 @@ export function ConfirmingPhase() {
           ) : (
             <>
               <Play className="w-5 h-5" />
-              <span>Start Deep Research</span>
+              <span>Start Research</span>
             </>
           )}
         </motion.button>

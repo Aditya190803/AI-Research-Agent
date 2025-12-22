@@ -28,7 +28,7 @@ export function Header() {
               <Sparkles className="w-5 h-5 text-accent" />
             </motion.div>
             <span className="font-semibold text-lg text-text-primary group-hover:text-accent transition-colors">
-              Deep Research
+              AI Research Agent
             </span>
           </Link>
 

@@ -20,7 +20,7 @@ export function Navbar() {
             <Sparkles className="w-5 h-5" />
           </div>
           <span className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-text-primary to-text-secondary">
-            Deep Research
+            AI Research Agent
           </span>
         </Link>
 

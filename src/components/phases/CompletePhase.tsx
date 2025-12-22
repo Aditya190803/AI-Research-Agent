@@ -49,10 +49,12 @@ export function CompletePhase() {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  /*
   const handleShare = async () => {
     await navigator.clipboard.writeText(window.location.href);
     alert("Link copied to clipboard!");
   };
+  */
 
   const handleCopySection = async (title: string, content: string) => {
     await navigator.clipboard.writeText(`${title}\n\n${content}`);
@@ -107,6 +109,7 @@ export function CompletePhase() {
           </motion.button>
 
           <div className="flex items-center gap-1 ml-2 bg-surface/50 p-1 rounded-xl border border-border-subtle">
+            {/* 
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -116,6 +119,7 @@ export function CompletePhase() {
             >
               <Share className="w-4 h-4" />
             </motion.button>
+            */}
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

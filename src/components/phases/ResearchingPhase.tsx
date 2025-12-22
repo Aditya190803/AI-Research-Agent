@@ -81,7 +81,7 @@ export function ResearchingPhase() {
           </motion.div>
 
           <h2 className="text-2xl font-semibold text-text-primary mb-2">
-            Deep Research in Progress
+            Research in Progress
           </h2>
           <p className="text-text-secondary">
             Analyzing multiple sources to bring you comprehensive insights
