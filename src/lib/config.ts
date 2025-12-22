@@ -2,8 +2,8 @@ import { env } from "./env";
 
 export const config = {
   app: {
-    name: "Deep Research",
-    description: "AI-powered deep research and financial analysis tool",
+    name: "AI Research Agent",
+    description: "AI-powered research agent and financial analysis tool",
     url: env.NEXT_PUBLIC_APP_URL,
   },
   api: {

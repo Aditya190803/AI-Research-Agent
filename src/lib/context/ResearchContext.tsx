@@ -39,7 +39,7 @@ interface ResearchContextType {
   handleSearch: () => Promise<void>;
   handleClarificationAnswer: (answers: Record<string, string>) => Promise<void>;
   handleClarificationSkip: () => Promise<void>;
-  executeDeepResearch: () => Promise<void>;
+  executeResearch: () => Promise<void>;
   handleRefine: () => void;
   handleRefineSubmit: () => Promise<void>;
   resetState: () => void;
@@ -242,7 +242,7 @@ export function ResearchProvider({ children }: { children: React.ReactNode }) {
     await generateStrategy(query, "");
   }, [query, generateStrategy]);
 
-  const executeDeepResearch = useCallback(async () => {
+  const executeResearch = useCallback(async () => {
     if (!strategy) return;
 
     setPhase("researching");
@@ -352,7 +352,7 @@ export function ResearchProvider({ children }: { children: React.ReactNode }) {
     handleSearch,
     handleClarificationAnswer,
     handleClarificationSkip,
-    executeDeepResearch,
+    executeResearch,
     handleRefine,
     handleRefineSubmit,
     resetState,

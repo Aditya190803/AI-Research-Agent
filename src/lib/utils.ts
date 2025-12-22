@@ -294,7 +294,7 @@ export function generateResearchId(): string {
   return result;
 }
 
-const STORAGE_KEY = 'deep-research-history';
+const STORAGE_KEY = 'ai-research-agent-history';
 
 export function saveToLocalStorage(results: ResearchResult[]): void {
   if (typeof window === 'undefined') return;

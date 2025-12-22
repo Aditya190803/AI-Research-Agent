@@ -232,7 +232,7 @@ IMPORTANT: Unless another country is explicitly mentioned, assume an Indian cont
 Respond in JSON format:
 {
   "scope": "A clear, concise scope statement",
-  "optimizedQuery": "The refined search query for deep research (add 'India' or 'Indian' to the query if no country is specified)",
+  "optimizedQuery": "The refined search query for research (add 'India' or 'Indian' to the query if no country is specified)",
   "subQueries": ["Query 1 for specific aspect", "Query 2 for another aspect", "Query 3 for financial/regulatory aspect"],
   "investigationPath": ["Step 1: ...", "Step 2: ...", "Step 3: ..."]
 }

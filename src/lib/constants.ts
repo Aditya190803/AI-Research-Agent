@@ -1,5 +1,5 @@
-export const APP_NAME = "Deep Research";
-export const APP_DESCRIPTION = "AI-powered deep research and financial analysis tool";
+export const APP_NAME = "AI Research Agent";
+export const APP_DESCRIPTION = "AI-powered research agent and financial analysis tool";
 
 export const API_URLS = {
   OPENROUTER: "https://openrouter.ai/api/v1/chat/completions",
