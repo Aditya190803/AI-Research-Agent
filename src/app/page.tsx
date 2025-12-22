@@ -86,7 +86,7 @@ export default function HomePage() {
             >
               <Sparkles className="w-4 h-4 text-accent" />
               <span className="text-sm text-text-secondary">
-                AI-Powered Deep Research
+                AI-Powered Research Agent
               </span>
             </motion.div>
 

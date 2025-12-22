@@ -19,20 +19,20 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Deep Research | AI-Powered Research Assistant",
+  title: "AI Research Agent | AI-Powered Research Assistant",
   description:
     "Experience the future of research with AI-powered deep analysis, real-time data synthesis, and comprehensive insights.",
   keywords: [
     "AI research",
-    "deep research",
+    "research agent",
     "research assistant",
     "AI analysis",
     "stock research",
     "market analysis",
   ],
-  authors: [{ name: "Deep Research" }],
+  authors: [{ name: "AI Research Agent" }],
   openGraph: {
-    title: "Deep Research | AI-Powered Research Assistant",
+    title: "AI Research Agent | AI-Powered Research Assistant",
     description:
       "Experience the future of research with AI-powered deep analysis",
     type: "website",
