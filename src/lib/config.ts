@@ -10,7 +10,7 @@ export const config = {
     openRouter: {
       key: env.OPENROUTER_API_KEY,
       baseUrl: "https://openrouter.ai/api/v1",
-      model: "xiaomi/mimo-v2-flash:free",
+      model: "openai/gpt-oss-120b:free",
     },
     langSearch: {
       key: env.LANGSEARCH_API_KEY,

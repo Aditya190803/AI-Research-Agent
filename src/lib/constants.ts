@@ -8,7 +8,7 @@ export const API_URLS = {
 };
 
 export const LLM_MODELS = {
-  PRIMARY: "xiaomi/mimo-v2-flash:free",
+  PRIMARY: "openai/gpt-oss-120b:free",
 };
 
 export const ANIMATION_DURATIONS = {
