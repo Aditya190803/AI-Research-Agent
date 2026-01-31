@@ -9,7 +9,7 @@ AI Research Agent is designed for high-stakes information gathering. Unlike stan
 ## 🛠️ Tech Stack
 
 - **Framework**: [Next.js 15+](https://nextjs.org/) (App Router, Turbopack)
-- **LLM Orchestration**: [OpenRouter](https://openrouter.ai/) (utilizing `xiaomi/mimo-v2-flash:free` for high-speed synthesis).
+- **LLM Orchestration**: [OpenRouter](https://openrouter.ai/) (utilizing `openai/gpt-oss-120b:free` for high-speed synthesis).
 - **Web Search**: [LangSearch](https://langsearch.com/) for comprehensive web crawling and information retrieval.
 - **Financial Data**: [Alpha Vantage](https://www.alphavantage.co/) for real-time stock quotes and company overviews.
 - **Runtime**: [Bun](https://bun.sh/) for ultra-fast development and build cycles.
