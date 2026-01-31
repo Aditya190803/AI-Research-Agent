@@ -4,8 +4,10 @@ import { detectQueryType, extractStockSymbols } from "@/lib/utils";
 import { 
   fetchFinanceData, 
   fetchSearchResults, 
+  fetchNewsResults,
   synthesizeResults, 
-  callLLM 
+  callLLM,
+  executeStaggered 
 } from "@/lib/api-helpers";
 import { rateLimit } from "@/lib/rate-limit";
 import { FinanceData, SearchResult } from "@/types";
@@ -15,6 +17,7 @@ const requestSchema = z.object({
   action: z.enum(["execute", "explore", "strategy", "synthesize"]),
   query: z.string().min(1).max(1000).optional(),
   subQueries: z.array(z.string()).optional(),
+  stockSymbols: z.array(z.string()).optional(),
   context: z.string().max(2000).optional(),
   searchResults: z.array(z.custom<SearchResult>()).optional(),
   financeData: z.union([z.custom<FinanceData>(), z.array(z.custom<FinanceData>())]).optional(),
@@ -48,7 +51,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { action, query = "", subQueries = [], context, searchResults, financeData } = validated.data;
+    const { action, query = "", subQueries = [], stockSymbols = [], context, searchResults, financeData } = validated.data;
 
     switch (action) {
       case "execute": {
@@ -57,35 +60,42 @@ export async function POST(req: NextRequest) {
         const queryType = detectQueryType(query);
         const finance: FinanceData[] = [];
         let allSearchResults: SearchResult[] = [];
+        let newsResults: SearchResult[] = [];
 
-        // Run finance detection and search in parallel
-        const tasks: Promise<void>[] = [];
+        // Run finance detection in parallel (AlphaVantage)
+        const financeTasks = (stockSymbols.length > 0 ? stockSymbols : extractStockSymbols(query)).map(symbol => 
+          fetchFinanceData(symbol)
+            .then(data => { finance.push(data); })
+            .catch(e => logger.error(`Finance API error for ${symbol}`, e))
+        );
 
-        if (queryType === "finance") {
-          const symbols = extractStockSymbols(query);
-          if (symbols.length > 0) {
-            symbols.forEach(symbol => {
-              tasks.push(
-                fetchFinanceData(symbol)
-                  .then(data => {
-                    finance.push(data);
-                  })
-                  .catch(e => logger.error(`Finance API error for ${symbol}`, e))
-              );
-            });
-          }
-        }
-
-        // Use subQueries if provided, otherwise use the main query
+        // LangSearch tasks (Search + News)
         const queriesToRun = subQueries.length > 0 ? subQueries : [query];
         
-        queriesToRun.forEach(q => {
-          tasks.push(fetchSearchResults(q).then(res => {
+        const searchTasks = queriesToRun.map(q => async () => {
+          try {
+            const res = await fetchSearchResults(q);
             allSearchResults = [...allSearchResults, ...res.results];
-          }).catch(e => logger.error(`Search API error for query "${q}"`, e)));
+          } catch (e) {
+            logger.error(`Search API error for query "${q}"`, e);
+          }
         });
 
-        await Promise.all(tasks);
+        const newsTask = async () => {
+          try {
+            newsResults = await fetchNewsResults(query);
+          } catch (e) {
+            logger.error(`News API error for query "${query}"`, e);
+          }
+        };
+
+        // Combine LangSearch tasks and execute them with a delay between each
+        const langSearchTasks = [...searchTasks, newsTask];
+        
+        await Promise.all([
+          Promise.all(financeTasks),
+          executeStaggered(langSearchTasks, 600) // 600ms stagger between search/news requests
+        ]);
 
         // Deduplicate search results by URL
         const uniqueResults = Array.from(new Map(allSearchResults.map(item => [item.url, item])).values());
@@ -99,8 +109,9 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({
           ...synthesis,
           searchResults: uniqueResults,
+          newsResults,
           financeData: finance,
-          type: queryType,
+          type: finance.length > 0 ? "finance" : queryType,
         });
       }
 
@@ -234,10 +245,13 @@ Respond in JSON format:
   "scope": "A clear, concise scope statement",
   "optimizedQuery": "The refined search query for research (add 'India' or 'Indian' to the query if no country is specified)",
   "subQueries": ["Query 1 for specific aspect", "Query 2 for another aspect", "Query 3 for financial/regulatory aspect"],
+  "stockSymbols": ["SYMBOL1", "SYMBOL2"],
   "investigationPath": ["Step 1: ...", "Step 2: ...", "Step 3: ..."]
 }
 
-CRITICAL: Provide 3-5 distinct sub-queries that cover different aspects of the research topic to ensure comprehensive coverage. Each sub-query should be optimized for a search engine.`,
+CRITICAL: If the research involves specific companies, ALWAYS provide their stock symbols in "stockSymbols". For Indian companies, use the symbol followed by ".NS" (for National Stock Exchange) or ".BSE" (for Bombay Stock Exchange) if you are sure, otherwise just the symbol.
+
+Provide 3-5 distinct sub-queries that cover different aspects of the research topic to ensure comprehensive coverage. Each sub-query should be optimized for a search engine.`,
           },
           {
             role: "user",
