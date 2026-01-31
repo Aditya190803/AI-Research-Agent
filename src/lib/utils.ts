@@ -80,9 +80,16 @@ export function detectQueryType(query: string): "finance" | "general" {
     "balance sheet",
     "income statement",
     "cash flow",
+    "valuation",
+    "growth",
+    "price target",
+    "nifty",
+    "sensex",
+    "bse",
+    "nse",
   ];
 
-  const stockSymbolPattern = /\b[A-Z]{1,5}\b/g;
+  const stockSymbolPattern = /\b[A-Z0-9.]{2,10}\b/g;
   const companyPhrases = [
     "stock of",
     "shares of",
@@ -91,6 +98,8 @@ export function detectQueryType(query: string): "finance" | "general" {
     "should i buy",
     "should i sell",
     "market cap of",
+    "chart for",
+    "historical data of",
   ];
 
   const lowerQuery = query.toLowerCase();
@@ -109,9 +118,9 @@ export function detectQueryType(query: string): "finance" | "general" {
     }
   }
 
-  // Check for stock symbols (uppercase letters 1-5 chars)
+  // Check for stock symbols (uppercase letters/numbers 2-10 chars)
   const symbols = query.match(stockSymbolPattern);
-  if (symbols && symbols.some((s) => s.length >= 2 && s.length <= 5)) {
+  if (symbols && symbols.some((s) => s.length >= 2 && s.length <= 10)) {
     // Common words that look like tickers but aren't
     const commonWords = [
       "THE",
@@ -182,85 +191,61 @@ export function detectQueryType(query: string): "finance" | "general" {
 
   return "general";
 }
+export function filterLowQualityResults(results: any[]): any[] {
+  const lowQualityDomains = [
+    "facebook.com",
+    "instagram.com",
+    "twitter.com",
+    "pinterest.com",
+    "tiktok.com",
+    "quora.com",
+  ];
 
+  return results.filter(result => {
+    try {
+      const url = new URL(result.url);
+      return !lowQualityDomains.some(domain => url.hostname.endsWith(domain));
+    } catch {
+      return false;
+    }
+  });
+}
 export function extractStockSymbol(query: string): string | null {
   const symbols = extractStockSymbols(query);
   return symbols.length > 0 ? symbols[0] : null;
 }
 
 export function extractStockSymbols(query: string): string[] {
-  // Common stock symbols pattern
-  const symbolPattern = /\b([A-Z]{1,5})\b/g;
+  // Common stock symbols pattern - allow numbers and dots for stock codes like 500209 or RELIANCE.NS
+  const symbolPattern = /\b([A-Z0-9.]{2,10})\b/g;
   const matches = query.match(symbolPattern);
 
   if (matches) {
     const commonWords = [
-      "THE",
-      "AND",
-      "FOR",
-      "ARE",
-      "BUT",
-      "NOT",
-      "YOU",
-      "ALL",
-      "CAN",
-      "HER",
-      "WAS",
-      "ONE",
-      "OUR",
-      "OUT",
-      "HAS",
-      "HIS",
-      "HOW",
-      "ITS",
-      "MAY",
-      "NEW",
-      "NOW",
-      "OLD",
-      "SEE",
-      "WAY",
-      "WHO",
-      "BOY",
-      "DID",
-      "GET",
-      "HIM",
-      "LET",
-      "PUT",
-      "SAY",
-      "SHE",
-      "TOO",
-      "USE",
-      "AI",
-      "OR",
-      "AND",
-      "NOT",
-      "IF",
-      "OF",
-      "TO",
-      "IN",
-      "IS",
-      "IT",
-      "AS",
-      "AT",
-      "BY",
-      "BE",
-      "ON",
-      "SO",
-      "WE",
-      "AN",
-      "DO",
-      "NO",
-      "UP",
-      "MY",
-      "GO",
-      "ME",
-      "HE",
+      "THE", "AND", "FOR", "ARE", "BUT", "NOT", "YOU", "ALL", "CAN", "HER", "WAS",
+      "ONE", "OUR", "OUT", "HAS", "HIS", "HOW", "ITS", "MAY", "NEW", "NOW", "OLD",
+      "SEE", "WAY", "WHO", "BOY", "DID", "GET", "HIM", "LET", "PUT", "SAY", "SHE",
+      "TOO", "USE", "AI", "OR", "IF", "OF", "TO", "IN", "IS", "IT", "AS", "AT",
+      "BY", "BE", "ON", "SO", "WE", "AN", "DO", "NO", "UP", "MY", "GO", "ME", "HE",
+      "INDIA", "NSE", "BSE", "STOCK", "PRICE", "SHARE", "MARKET", "PLAN", "THEM",
+      "BEST", "TOP", "WHY", "HOW", "WHAT", "WHEN", "WHERE"
     ];
     
     const symbols: string[] = [];
     for (const match of matches) {
-      if (!commonWords.includes(match) && match.length >= 2 && !symbols.includes(match)) {
-        symbols.push(match);
+      if (commonWords.includes(match)) continue;
+      
+      // Filter out purely numeric values that are likely years or simple numbers
+      if (/^\d+$/.test(match)) {
+        // Only allow numeric codes if they are 6 digits (likely BSE codes)
+        if (match.length !== 6) continue;
+      }
+      
+      // Must contain at least one letter or be a 6-digit number
+      if (/[A-Z]/.test(match) || /^\d{6}$/.test(match)) {
+        if (match.length >= 2 && !symbols.includes(match)) {
+          symbols.push(match);
+        }
       }
     }
     return symbols;

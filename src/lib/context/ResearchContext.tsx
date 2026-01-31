@@ -264,6 +264,7 @@ export function ResearchProvider({ children }: { children: React.ReactNode }) {
           url: r.url,
           snippet: r.content.slice(0, 200),
         })),
+        newsResults: data.newsResults || [],
         financeData: data.financeData,
         phase: "complete",
       };

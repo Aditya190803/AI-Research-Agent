@@ -12,6 +12,7 @@ export interface ResearchApiResponse {
   keyFindings: string[];
   detailedAnalysis: string;
   searchResults: SearchResult[];
+  newsResults: SearchResult[];
   financeData: FinanceData[];
   type: "finance" | "general";
 }
@@ -63,6 +64,7 @@ export const researchClient: ResearchClient = {
         action: "execute",
         query: strategy.optimizedQuery,
         subQueries: strategy.subQueries,
+        stockSymbols: strategy.stockSymbols,
       }),
       signal,
     });

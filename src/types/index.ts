@@ -4,6 +4,7 @@ export type ResearchPhase =
   | "clarifying"
   | "confirming"
   | "researching"
+  | "news"
   | "complete"
   | "error";
 
@@ -11,6 +12,11 @@ export interface Source {
   title: string;
   url: string;
   snippet: string;
+}
+
+export interface HistoricalPoint {
+  date: string;
+  price: number;
 }
 
 export interface FinanceData {
@@ -33,6 +39,7 @@ export interface FinanceData {
   exchange: string;
   currency: string;
   currencySymbol: string;
+  historicalData?: HistoricalPoint[];
 }
 
 export interface ResearchResult {
@@ -43,6 +50,7 @@ export interface ResearchResult {
   keyFindings?: string[];
   detailedAnalysis?: string;
   sources?: Source[];
+  newsResults?: SearchResult[];
   financeData?: FinanceData[];
   timestamp: Date;
   phase: ResearchPhase;
@@ -63,6 +71,7 @@ export interface ResearchStrategy {
   optimizedQuery: string;
   subQueries: string[];
   investigationPath: string[];
+  stockSymbols?: string[];
 }
 
 export interface SearchResult {
