@@ -350,14 +350,34 @@
 }
 
 .prose-research table {
-  @apply w-full border-collapse my-4;
+  @apply w-full border-collapse my-6 text-sm;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
 }
 
 .prose-research th,
 .prose-research td {
-  @apply border border-border px-3 py-2 text-left;
+  @apply px-4 py-3 text-left border-b border-border-subtle;
 }
 
 .prose-research th {
-  @apply bg-surface font-medium;
+  @apply bg-surface font-semibold text-text-primary;
+  border-bottom: 2px solid var(--color-border);
+}
+
+.prose-research td {
+  @apply text-text-secondary;
+}
+
+.prose-research tr:nth-child(even) td {
+  @apply bg-surface/50;
+}
+
+.prose-research tr:hover td {
+  @apply bg-surface-hover;
+}
+
+.prose-research tr:last-child td {
+  border-bottom: none;
 }

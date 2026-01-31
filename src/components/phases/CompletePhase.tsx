@@ -10,6 +10,7 @@ import {
   CheckCircle,
   BookOpen,
   TrendingUp,
+  Newspaper,
   ExternalLink,
   ChevronDown,
   ChevronUp,
@@ -23,17 +24,18 @@ import {
   Plus,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { FinanceCard } from "@/components/ui/FinanceCard";
+import { FinanceCard, SectorComparison } from "@/components/ui";
 import { SourceCard } from "@/components/ui/SourceCard";
 import { FollowUpInput } from "@/components/search/FollowUpInput";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export function CompletePhase() {
   const { result, handleRefine, resetState } = useResearch();
   const router = useRouter();
   const [showFullAnalysis, setShowFullAnalysis] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [activeTab, setActiveTab] = useState<"summary" | "analysis" | "sources">("summary");
+  const [activeTab, setActiveTab] = useState<"summary" | "analysis" | "sources" | "news">("summary");
 
   if (!result) return null;
 
@@ -162,11 +164,17 @@ export function CompletePhase() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
+          className="space-y-6"
         >
           <div className="flex items-center gap-2 mb-4">
             <TrendingUp className="w-5 h-5 text-accent" />
             <h3 className="font-semibold text-text-primary">Financial Data</h3>
           </div>
+
+          {result.financeData.length > 1 && (
+            <SectorComparison data={result.financeData} />
+          )}
+
           <div className="grid gap-4 md:grid-cols-2">
             {result.financeData.map((data) => (
               <FinanceCard key={data.symbol} data={data} />
@@ -200,6 +208,14 @@ export function CompletePhase() {
           icon={<BookOpen className="w-4 h-4" />}
           label={`Sources (${result.sources?.length || 0})`}
         />
+        {result.newsResults && result.newsResults.length > 0 && (
+          <TabButton
+            active={activeTab === "news"}
+            onClick={() => setActiveTab("news")}
+            icon={<Newspaper className="w-4 h-4" />}
+            label={`Latest News (${result.newsResults.length})`}
+          />
+        )}
       </motion.div>
 
       {/* Tab Content */}
@@ -218,7 +234,7 @@ export function CompletePhase() {
                   <Sparkles className="w-5 h-5 text-accent" />
                   <h3 className="font-semibold text-text-primary">AI Summary</h3>
                 </div>
-                <button 
+                <button
                   onClick={() => handleCopySection("AI Summary", result.summary || "")}
                   className="p-2 rounded-lg hover:bg-surface-hover text-text-muted hover:text-text-primary transition-colors"
                   title="Copy Summary"
@@ -227,7 +243,7 @@ export function CompletePhase() {
                 </button>
               </div>
               <div className="prose prose-invert prose-research max-w-none">
-                <ReactMarkdown>{result.summary}</ReactMarkdown>
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{result.summary}</ReactMarkdown>
               </div>
             </div>
 
@@ -267,7 +283,7 @@ export function CompletePhase() {
                   <FileText className="w-5 h-5 text-accent" />
                   <h3 className="font-semibold text-text-primary">Detailed Analysis</h3>
                 </div>
-                <button 
+                <button
                   onClick={() => handleCopySection("Detailed Analysis", result.detailedAnalysis || "")}
                   className="p-2 rounded-lg hover:bg-surface-hover text-text-muted hover:text-text-primary transition-colors"
                   title="Copy Analysis"
@@ -298,7 +314,7 @@ export function CompletePhase() {
                 !showFullAnalysis && "max-h-[400px] overflow-hidden relative"
               )}
             >
-              <ReactMarkdown>{result.detailedAnalysis}</ReactMarkdown>
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>{result.detailedAnalysis}</ReactMarkdown>
               {!showFullAnalysis && (
                 <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-surface to-transparent pointer-events-none" />
               )}
@@ -320,6 +336,22 @@ export function CompletePhase() {
                 <p className="text-text-secondary">No sources available</p>
               </div>
             )}
+          </div>
+        )}
+
+        {activeTab === "news" && (
+          <div className="grid gap-4 md:grid-cols-2">
+            {result.newsResults?.map((news, index) => (
+              <SourceCard
+                key={index}
+                source={{
+                  title: news.title,
+                  url: news.url,
+                  snippet: news.content,
+                }}
+                index={index}
+              />
+            ))}
           </div>
         )}
       </motion.div>

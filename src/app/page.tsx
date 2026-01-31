@@ -47,7 +47,7 @@ const features = [
 ];
 
 const exampleQueries = [
-  "What are the best mutual funds to invest in India for 2025?",
+  "What are the best mutual funds to invest in India for 2026?",
   "Compare Tesla vs Rivian stock performance",
   "How does quantum computing affect cybersecurity?",
   "Analyze the impact of AI on Indian IT sector",

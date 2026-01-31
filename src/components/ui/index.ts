@@ -1,5 +1,6 @@
 export { Button } from "./Button";
 export { Card, CardHeader, CardContent, CardTitle, CardDescription } from "./Card";
 export { FinanceCard } from "./FinanceCard";
+export { SectorComparison } from "./SectorComparison";
 export { Skeleton, SkeletonText, SkeletonCard } from "./Skeleton";
 export { SourceCard } from "./SourceCard";

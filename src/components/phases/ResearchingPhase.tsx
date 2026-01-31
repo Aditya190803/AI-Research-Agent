@@ -8,6 +8,7 @@ import {
   Brain,
   FileText,
   TrendingUp,
+  Newspaper,
   Sparkles,
   Loader2,
   X,
@@ -18,6 +19,7 @@ import { FinanceCardSkeleton, SourceCardSkeleton } from "@/components/ui/Skeleto
 const researchSteps = [
   { icon: Search, label: "Searching the web", duration: 3000 },
   { icon: TrendingUp, label: "Gathering real-time data", duration: 2500 },
+  { icon: Newspaper, label: "Checking latest news", duration: 2000 },
   { icon: Brain, label: "Analyzing information", duration: 4000 },
   { icon: FileText, label: "Cross-referencing sources", duration: 3500 },
   { icon: Sparkles, label: "Synthesizing insights", duration: 3000 },
