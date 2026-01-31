@@ -1,0 +1,25 @@
+src/lib/config.ts
+  65d809cd8c86289a 13
+src/lib/constants.ts
+  65d809cd8c86289a 11
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.0.40",
+  "base_commit_sha": "e7ecb5d1175ef869af26f01f4fa6c27988e1f6f1",
+  "prompts": {
+    "65d809cd8c86289a": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "7a2ecf20-4af8-4259-8da4-001b35113955",
+        "model": "copilot/gpt-5-mini"
+      },
+      "human_author": "Aditya Mer <aditya.mer@somaiya.edu>",
+      "messages": [],
+      "total_additions": 118,
+      "total_deletions": 66,
+      "accepted_lines": 72,
+      "overriden_lines": 1
+    }
+  }
+}
