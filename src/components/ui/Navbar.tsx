@@ -2,9 +2,8 @@
 
 import { motion } from "framer-motion";
 import { useResearch } from "@/lib/context/ResearchContext";
-import { History, Search, Sparkles } from "lucide-react";
+import { History } from "lucide-react";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
 
 export function Navbar() {
   const { setShowHistory } = useResearch();
@@ -17,7 +16,12 @@ export function Navbar() {
           className="flex items-center gap-2 group"
         >
           <div className="p-2 rounded-xl bg-accent/10 text-accent group-hover:bg-accent group-hover:text-white transition-all duration-300">
-            <Sparkles className="w-5 h-5" />
+            <img
+              src="/site-icon.svg"
+              alt=""
+              aria-hidden="true"
+              className="w-5 h-5"
+            />
           </div>
           <span className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-text-primary to-text-secondary">
             AI Research Agent

@@ -22,6 +22,11 @@ export const metadata: Metadata = {
   title: "AI Research Agent | AI-Powered Research Assistant",
   description:
     "Experience the future of research with AI-powered deep analysis, real-time data synthesis, and comprehensive insights.",
+  icons: {
+    icon: "/site-icon.svg",
+    shortcut: "/site-icon.svg",
+    apple: "/site-icon.svg",
+  },
   keywords: [
     "AI research",
     "research agent",

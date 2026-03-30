@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useResearch } from "@/lib/context/ResearchContext";
 import { motion } from "framer-motion";
-import { Sparkles, History, Menu, X, Home } from "lucide-react";
+import { History, Menu, X, Home } from "lucide-react";
 import { useState } from "react";
 
 export function Header() {
@@ -25,7 +25,12 @@ export function Header() {
               transition={{ duration: 0.3 }}
               className="p-2 rounded-lg bg-accent/10"
             >
-              <Sparkles className="w-5 h-5 text-accent" />
+              <img
+                src="/site-icon.svg"
+                alt=""
+                aria-hidden="true"
+                className="w-5 h-5"
+              />
             </motion.div>
             <span className="font-semibold text-lg text-text-primary group-hover:text-accent transition-colors">
               AI Research Agent
