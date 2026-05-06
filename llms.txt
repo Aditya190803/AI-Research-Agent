@@ -1,0 +1,22 @@
+# AI Research Agent
+
+> A professional-grade AI research platform delivering comprehensive, multi-source synthesized reports with real-time financial data integration.
+
+## Overview
+AI Research Agent is an AI-powered research platform that generates comprehensive research reports by synthesizing information from multiple sources, including real-time financial data.
+
+## Key Features
+- **Multi-source Research** — Synthesizes data from multiple information sources
+- **Real-time Financial Data** — Integrates live financial market data into reports
+- **Comprehensive Reports** — Generates detailed, professional-grade research documents
+- **Search & Discovery** — Search-based research topic exploration
+- **Rate Limiting** — Built-in API rate limiting for reliable operation
+
+## Pages
+- `/` — Landing page
+- `/search/[id]` — Specific research report
+
+## Tech Stack
+- Next.js (App Router)
+- AI/LLM Integration
+- TypeScript
